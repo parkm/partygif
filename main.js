@@ -21,18 +21,22 @@ function onBodyLoad() {
     tintedCanvases.push(canvasElement);
   });
 
-  gifshot.createGIF({
-    images: tintedCanvases.map(c => c.toDataURL()),
-    gifWidth: imgElement.width,
-    gifHeight: imgElement.height
-  }, function(obj) {
-    if (!obj.error) {
-      let image = obj.image,
-      animatedImage = document.createElement('img');
-      animatedImage.src = image;
-      document.body.appendChild(animatedImage);
-    }
+  let gif = new GIF({
+    workers: 2,
+    quality: 10,
+    workerScript: 'node_modules/gif.js/dist/gif.worker.js',
+    transparent: 0x000000
   });
+
+  tintedCanvases.forEach(c => gif.addFrame(c, {copy: true, delay: 0.001})),
+
+  gif.on('finished', (blob) => {
+    let img = document.createElement('img');
+    img.src = URL.createObjectURL(blob);
+    document.body.appendChild(img);
+  });
+
+  gif.render();
 }
 
 function genTintedImage(imgElement, fillStyle, blendMode='color') {
