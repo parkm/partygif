@@ -1,0 +1,15 @@
+{
+  "name": "partygif",
+  "version": "0.1.0",
+  "description": "Create a party gif from an image",
+  "main": "index.js",
+  "author": "Parker Miller",
+  "license": "MIT",
+  "scripts": {
+      "start": "http-server ./"
+  },
+  "dependencies": {
+    "gifshot": "^0.4.5",
+    "http-server": "^0.11.1"
+  }
+}
