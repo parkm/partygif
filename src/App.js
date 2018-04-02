@@ -9,6 +9,10 @@ import RangeInput from '@instructure/ui-core/lib/components/RangeInput';
 import FileDrop from '@instructure/ui-core/lib/components/FileDrop';
 import Billboard from '@instructure/ui-core/lib/components/Billboard';
 
+import { SketchPicker } from 'react-color';
+
+import ColorSelect from './ColorSelect';
+
 theme.use();
 
 class App extends Component {
@@ -16,6 +20,7 @@ class App extends Component {
     super();
     this.state = {};
     this.quality = 1;
+    this.alphaColor = '#ffffff';
   }
 
   genGif = () => {
@@ -44,7 +49,7 @@ class App extends Component {
       workers: 2,
       quality: this.quality,
       workerScript: './gif.worker.js',
-      transparent: 0xFFFFFF
+      transparent: '0x' + this.alphaColor.replace('#', '')
     });
 
     tintedCanvases.forEach(c => gif.addFrame(c, {copy: true, delay: 0.001}));
@@ -104,6 +109,7 @@ class App extends Component {
             }
           />
           <RangeInput label="Pixel Sample Interval (Lower is better quality)" defaultValue={1} min={1} max={20} onChange={v => this.quality = v}/>
+          <ColorSelect label="Alpha Color" onChangeComplete={colorHex => this.alphaColor=colorHex} />
         </FormFieldGroup>
         <Button onClick={this.genGif}>Generate</Button>
         <div ref={r => this.tintedCanvasContainer = r}></div>
