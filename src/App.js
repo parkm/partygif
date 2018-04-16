@@ -9,6 +9,9 @@ import RangeInput from '@instructure/ui-core/lib/components/RangeInput';
 import FileDrop from '@instructure/ui-core/lib/components/FileDrop';
 import Billboard from '@instructure/ui-core/lib/components/Billboard';
 import Container from '@instructure/ui-core/lib/components/Container';
+import Flex, {FlexItem} from '@instructure/ui-layout/lib/components/Flex';
+import IconX from '@instructure/ui-icons/lib/Solid/IconX';
+import IconPlus from '@instructure/ui-icons/lib/Solid/IconPlus';
 
 import { SketchPicker } from 'react-color';
 
@@ -19,20 +22,22 @@ theme.use();
 class App extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      tints: [
+        'red',
+        'orange',
+        'yellow',
+        'green',
+        'blue',
+        'purple'
+      ]
+    };
     this.quality = 1;
     this.alphaColor = '#ffffff';
   }
 
   genGif = () => {
-    let tints = [
-      'red',
-      'orange',
-      'yellow',
-      'green',
-      'blue',
-      'purple'
-    ];
+    let tints = this.state.tints;
 
     let tintedCanvases = [];
 
@@ -93,6 +98,41 @@ class App extends Component {
     reader.readAsDataURL(file);
   }
 
+  onAddTintBlockClick = () => {
+    let tints = this.state.tints;
+    tints.push('white');
+    this.setState({tints: tints});
+  }
+
+  onRemoveTintBlockClick = (index) => {
+    let tints = this.state.tints;
+    tints.splice(index, 1);
+    this.setState({tints: tints});
+  }
+
+  onTintBlockUpdate = (tint, index) => {
+    let tints = this.state.tints;
+    tints.splice(index, 1, tint);
+    this.setState({tints: tints});
+  }
+
+  renderTintBlock(tint, index) {
+    return (
+      <FlexItem key={tint} padding="x-small">
+        <Flex>
+          <FlexItem>
+            <ColorSelect label="" defaultColor={tint} onColorHide={colorHex => this.onTintBlockUpdate(colorHex, index)} />
+          </FlexItem>
+          <FlexItem>
+          <Button size="small" variant="circle-danger" onClick={_ => this.onRemoveTintBlockClick(index)}>
+            <IconX />
+          </Button>
+          </FlexItem>
+        </Flex>
+      </FlexItem>
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -112,6 +152,16 @@ class App extends Component {
             />
             <RangeInput label="Pixel Sample Interval (Lower is better quality)" defaultValue={1} min={1} max={20} onChange={v => this.quality = v}/>
             <ColorSelect label="Alpha Color" onChangeComplete={colorHex => this.alphaColor=colorHex} />
+            <Flex>
+              {this.state.tints.map((tint, i) => {
+                return this.renderTintBlock(tint, i)
+              })}
+              <FlexItem>
+                <Button variant="circle-primary" onClick={this.onAddTintBlockClick}>
+                  <IconPlus />
+                </Button>
+              </FlexItem>
+            </Flex>
           </FormFieldGroup>
           <Button onClick={this.genGif}>Generate</Button>
           <Container as="div" padding="medium">

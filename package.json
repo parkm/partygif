@@ -6,8 +6,9 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@instructure/ui-core": "^4.7.3",
-    "@instructure/ui-themes": "^4.7.3",
+    "@instructure/ui-core": "^5.2.0",
+    "@instructure/ui-layout": "^5.2.0",
+    "@instructure/ui-themes": "^5.2.0",
     "gif.js": "^0.2.0",
     "react": "^16.2.0",
     "react-color": "^2.14.0",

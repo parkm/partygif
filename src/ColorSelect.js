@@ -13,6 +13,12 @@ export default class ColorSelect extends Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.defaultColor) {
+      this.setState({colorHex: this.props.defaultColor});
+    }
+  }
+
   onChangeComplete = (color) => {
     this.setState({colorHex: color.hex});
     if (this.props.onChangeComplete) {
@@ -20,11 +26,25 @@ export default class ColorSelect extends Component {
     }
   }
 
+  onButtonClick = (e) => {
+    let show = !this.state.showColorPicker;
+    this.setState({showColorPicker: show});
+    if (show) {
+      if (this.props.onColorShow) {
+        this.props.onColorShow(this.state.colorHex);
+      }
+    } else {
+      if (this.props.onColorHide) {
+        this.props.onColorHide(this.state.colorHex);
+      }
+    }
+  }
+
   render() {
     return (
       <div>
         <Text>{this.props.label}</Text>
-        <Button onClick={e => this.setState({showColorPicker: !this.state.showColorPicker})}>
+        <Button onClick={this.onButtonClick}>
           <div className="color-select-icon" style={{background: this.state.colorHex}}/>
         </Button>
         {
