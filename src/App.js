@@ -8,6 +8,7 @@ import FormFieldGroup from '@instructure/ui-core/lib/components/FormFieldGroup';
 import RangeInput from '@instructure/ui-core/lib/components/RangeInput';
 import FileDrop from '@instructure/ui-core/lib/components/FileDrop';
 import Billboard from '@instructure/ui-core/lib/components/Billboard';
+import Container from '@instructure/ui-core/lib/components/Container';
 
 import { SketchPicker } from 'react-color';
 
@@ -95,25 +96,29 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <FormFieldGroup label="partygif" description="">
-          <FileDrop
-            accept={['.png', '.jpg', '.jpeg']}
-            onDropAccepted={this.onFileUpload}
-            onDropRejected={([file]) => { alert(`File rejected ${file.name}`) }}
-            label={
-              <Billboard
-                size="small"
-                message="Upload an image"
-                hero={<img alt="" ref={r => this.uploadedImage = r} />}
-              />
-            }
-          />
-          <RangeInput label="Pixel Sample Interval (Lower is better quality)" defaultValue={1} min={1} max={20} onChange={v => this.quality = v}/>
-          <ColorSelect label="Alpha Color" onChangeComplete={colorHex => this.alphaColor=colorHex} />
-        </FormFieldGroup>
-        <Button onClick={this.genGif}>Generate</Button>
-        <div ref={r => this.tintedCanvasContainer = r}></div>
-        <div ref={r => this.outputGifContainer = r}></div>
+        <Container as="div" textAlign="center" padding="large">
+          <FormFieldGroup label="partygif" description="">
+            <FileDrop
+              accept={['.png', '.jpg', '.jpeg']}
+              onDropAccepted={this.onFileUpload}
+              onDropRejected={([file]) => { alert(`File rejected ${file.name}`) }}
+              label={
+                <Billboard
+                  size="small"
+                  message="Upload an image"
+                  hero={<img alt="" ref={r => this.uploadedImage = r} />}
+                />
+              }
+            />
+            <RangeInput label="Pixel Sample Interval (Lower is better quality)" defaultValue={1} min={1} max={20} onChange={v => this.quality = v}/>
+            <ColorSelect label="Alpha Color" onChangeComplete={colorHex => this.alphaColor=colorHex} />
+          </FormFieldGroup>
+          <Button onClick={this.genGif}>Generate</Button>
+          <Container as="div" padding="medium">
+            <div ref={r => this.tintedCanvasContainer = r}></div>
+            <div ref={r => this.outputGifContainer = r}></div>
+          </Container>
+        </Container>
       </div>
     );
   }
