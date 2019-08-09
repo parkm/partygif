@@ -43,8 +43,8 @@ export default class ColorSelect extends Component {
   render() {
     return (
       <div>
-        <Text>{this.props.label}</Text>
-        <Button onClick={this.onButtonClick}>
+        <Text weight="bold">{this.props.label}</Text>
+        <Button margin="small" onClick={this.onButtonClick}>
           <div className="color-select-icon" style={{background: this.state.colorHex}}/>
         </Button>
         {
