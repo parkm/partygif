@@ -24,12 +24,15 @@ class App extends Component {
     super();
     this.state = {
       tints: [
-        'red',
-        'orange',
-        'yellow',
-        'green',
-        'blue',
-        'purple'
+        '#FF6B6B',
+        '#FF6BB5',
+        '#FF81FF',
+        '#D081FF',
+        '#81ACFF',
+        '#81FFFF',
+        '#81FF81',
+        '#FFD081',
+        '#FF8181'
       ]
     };
     this.quality = 1;
@@ -123,6 +126,38 @@ class App extends Component {
     this.setState({tints: tints});
   }
 
+  setOriginalColors = () => {
+    this.setState({tints: [
+      'red',
+      'orange',
+      'yellow',
+      'green',
+      'blue',
+      'purple'
+    ]})
+  }
+
+  setPartyColors = () => {
+    this.setState({tints: [
+      '#FF6B6B',
+      '#FF6BB5',
+      '#FF81FF',
+      '#D081FF',
+      '#81ACFF',
+      '#81FFFF',
+      '#81FF81',
+      '#FFD081',
+      '#FF8181'
+    ]})
+  }
+
+  setCustomColors = () => {
+    const colorString = prompt('Add colors', this.state.tints.join(','))
+    if (!colorString) return;
+    const colors = colorString.split(',').map(c => c.trim())
+    this.setState({ tints: colors })
+  }
+
   renderTintBlock(tint, index) {
     return (
       <FlexItem key={tint} padding="x-small">
@@ -167,6 +202,11 @@ class App extends Component {
               <RangeInput label="Pixel Sample Interval (Lower is better quality)" defaultValue={1} min={1} max={20} onChange={v => this.quality = v}/>
             </div>
             <ColorSelect label="Alpha Color" onChangeComplete={colorHex => this.alphaColor=colorHex} />
+            <div className="flex">
+              <Button onClick={this.setOriginalColors}>Use basic colors</Button>
+              <Button onClick={this.setPartyColors}>Use party colors</Button>
+              <Button onClick={this.setCustomColors}>Set custom colors</Button>
+            </div>
             <Flex wrapItems>
               {this.state.tints.map((tint, i) => {
                 return this.renderTintBlock(tint, i)
