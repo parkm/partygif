@@ -376,7 +376,7 @@ import PartyGifTitle from "./PartyGifTitle.astro";
       const gif = new GIF({
         workers: 2,
         quality: this.quality,
-        workerScript: "./partygif/gif.worker.js",
+        workerScript: "./gif.worker.js",
         transparent: "0x" + this.alphaColor.replace("#", ""),
       });
 
