@@ -1,0 +1,58 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  color: string;
+  index: number;
+}
+
+const { color, index } = Astro.props;
+---
+
+<div class="tint-block">
+  <div class="color-input-wrapper">
+    <input type="color" value={color} data-index={index} />
+    <span class="frame-number">Frame {index+1}</span>
+  </div>
+  <Button
+    className="remove-tint"
+    variant="danger"
+    id={`remove-${index}`}
+    data-index={index}
+  >
+    Remove
+  </Button>
+</div>
+
+<style>
+  .tint-block {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color:#4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 150px;
+  }
+
+  .color-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  input[type="color"] {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .frame-number {
+    font-weight: 500;
+    color: #f5f5f5;
+  }
+</style>

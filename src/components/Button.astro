@@ -1,0 +1,75 @@
+---
+interface Props {
+  id?: string;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary" | "danger" | "success";
+}
+
+const { id, className = "", type = "button", variant = "primary" } = Astro.props;
+---
+
+<button
+  {id}
+  class:list={["base-button", `variant-${variant}`, className]}
+  {type}
+>
+  <slot />
+</button>
+
+<style>
+  .base-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .base-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .base-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .variant-primary {
+    background-color: #2563eb;
+    color: white;
+  }
+  .variant-primary:hover {
+    background-color: #1d4ed8;
+  }
+
+  .variant-secondary {
+    background-color: #4b5563;
+    color: white;
+  }
+  .variant-secondary:hover {
+    background-color: #374151;
+  }
+
+  .variant-danger {
+    background-color: #dc2626;
+    color: white;
+  }
+  .variant-danger:hover {
+    background-color: #b91c1c;
+  }
+
+  .variant-success {
+    background-color: #16a34a;
+    color: white;
+  }
+  .variant-success:hover {
+    background-color: #15803d;
+  }
+</style>
