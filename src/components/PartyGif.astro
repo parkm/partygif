@@ -18,8 +18,8 @@ import PartyGifTitle from "./PartyGifTitle.astro";
         <div class="upload-content">
           <span class="upload-icon">📁</span>
           <p>Upload an image</p>
-          <img id="uploadedImage" alt="" style="max-width: 320px;" />
         </div>
+        <img id="uploadedImage" alt="" style="max-width: 320px;" />
       </label>
     </div>
 
@@ -66,6 +66,8 @@ import PartyGifTitle from "./PartyGifTitle.astro";
   .party-gif {
     padding: 2rem;
     background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
   }
   h1 {
     margin-top: 0;
@@ -79,6 +81,7 @@ import PartyGifTitle from "./PartyGifTitle.astro";
   }
   .upload-area {
     border: 2px dashed #ccc;
+    border-radius: 8px;
     text-align: center;
   }
   .upload-area label {
@@ -91,7 +94,7 @@ import PartyGifTitle from "./PartyGifTitle.astro";
     justify-content: center;
     gap: 1rem;
   }
-  .upload-area:hover {
+  .upload-area label:hover {
     filter: brightness(1.5);
   }
   .upload-icon {
